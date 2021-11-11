@@ -28,8 +28,8 @@ SECRET_KEY = 'django-insecure-@ecm%$u%^h%iujuu@fr--je-#=pt52ju&g3c0-3=i*^9p7!w&x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-CORS_ALLOW_ALL_ORIGINS = True
+# ALLOWED_HOSTS = []
+# CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Application definition
@@ -43,15 +43,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'authApp',
-    'corsheaders',
-
 ]
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),#se debe importar la libreria
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': True,
+    'BLACKLIST_AFTER_ROTATION': False,
     'UPDATE_LAST_LOGIN': False,
     'ALGORITHM': 'HS256',
     'USER_ID_FIELD': 'id',
@@ -66,7 +64,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
 ]
 
 REST_FRAMEWORK = {
@@ -75,7 +72,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
 
 AUTH_USER_MODEL = 'authApp.User'
@@ -113,6 +111,7 @@ DATABASES = {
         'PASSWORD': '9b1b55ffdfe6adf8796ee4f1f4aac801b9c963dabcca0b38ab89986630c5d848',
         'HOST': 'ec2-34-199-209-37.compute-1.amazonaws.com',
         'PORT': '5432',
+        'TEST':{'MIRROR':'default',},
     }
 }
 
@@ -162,5 +161,5 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-import django_heroku
-django_heroku.settings(locals())
+# import django_heroku
+# django_heroku.settings(locals())
